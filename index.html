@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Live Diagram Editor</title>
+    <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/monaco-languageclient@8.4.0/lib/index.min.js "></script>
+</head>
+
+<body style="display: flex; max-height:100vh;padding: 0;box-sizing: border-box;">
+    <div id="container" style="height:100vh;width:800px;border:1px solid grey"></div>
+    <div id="diagram" style="height:100vh;overflow:auto"></div>
+    <script>
+        require.config({ paths: { 'vs': 'https://unpkg.com/monaco-editor@latest/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            var editor = monaco.editor.create(document.getElementById('container'), {
+                value: '// type your code here',
+                language: 'python',
+                acceptSuggestionOnCommitCharacter: true,
+                acceptSuggestionOnEnter: "smart",
+                theme: "vs-dark",
+                minimap: { enabled: false },
+            });
+            monaco.languages.registerCompletionItemProvider('python', {
+                provideCompletionItems: function (model, position) {
+                    const word = model.getWordUntilPosition(position);
+                    const range = {
+                        startLineNumber: position.lineNumber,
+                        endLineNumber: position.lineNumber,
+                        startColumn: word.startColumn,
+                        endColumn: word.endColumn
+                    };
+
+                    // Example of adding a custom suggestion
+                    return {
+                        suggestions: [{
+                            label: 'my_custom_function',
+                            insertText: 'my_custom_function()',
+                            documentation: 'This is my custom function.',
+                            kind: monaco.languages.CompletionItemKind.Function,
+                            range: range
+                        }]
+                    };
+                }
+            });
+
+            const imageDiv = document.getElementById("diagram")
+            let timeoutId;
+
+            editor.onDidChangeModelContent(() => {
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+
+                timeoutId = setTimeout(async () => {
+                    console.log(editor.getModel())
+
+                    const res = await fetch("/endpoint", {
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        method: "POST",
+                        body: JSON.stringify({ "code": editor.getValue() })
+                    });
+                    const svg = await res.text();
+                    imageDiv.innerHTML = svg;
+                }, 1000);
+
+            });
+        }); Ø
+    </script>
+</body>
+
+</html>
