@@ -8,7 +8,7 @@ This a very rough sketch of a live diagram editor build with [Python Diagrams](h
 <hr/>
 
 ### TODO
-- [ ] Add a language server to provide intellisense for the web editor
+- [x] Add a language server to provide intellisense for the web editor
 - [x] Dockerize app
-- [ ] Add more robust css for the layout
+- [x] Add more robust css for the layout
  
