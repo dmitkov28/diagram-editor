@@ -1,13 +1,13 @@
 import ast
 import os
 
-from utils import modify_diagram_args
+from utils.ast_utils import modify_diagram_args
 
 
 def generate_diagram(definition: str = None):
     tree = ast.parse(definition)
-    modify_diagram_args(tree)
-    exec(ast.unparse(tree))
+    modified_diagram = modify_diagram_args(tree)
+    exec(modified_diagram)
 
     with open("static/file.svg", "r") as f:
         svg = f.read()

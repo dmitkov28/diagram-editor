@@ -1,4 +1,5 @@
 import ast
+import astor
 
 
 class WithStatementVisitor(ast.NodeVisitor):
@@ -18,7 +19,7 @@ class WithStatementVisitor(ast.NodeVisitor):
         self.generic_visit(node)
 
     def modify_args(self, node):
-        # new_arg = ast.Constant(value="file") 
+        # new_arg = ast.Constant(value="file")
         # node.args = [new_arg]
         kwargs = [
             ast.keyword(arg="filename", value=ast.Constant(value="static/file")),
@@ -28,6 +29,8 @@ class WithStatementVisitor(ast.NodeVisitor):
         node.keywords = kwargs
 
 
-def modify_diagram_args(diagram: ast.Module):
+def modify_diagram_args(source_code: str) -> str:
+    tree = ast.parse(source_code)
     visitor = WithStatementVisitor()
-    visitor.visit(diagram)
+    visitor.visit(tree)
+    return astor.to_source(tree)
