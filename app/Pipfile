@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 fastapi = "*"
 diagrams = "*"
+jedi-language-server = "*"
+astor = "*"
 
 [dev-packages]
 
