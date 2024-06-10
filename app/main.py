@@ -1,14 +1,16 @@
+import json
 import site
 
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from utils import generate_completions
+from utils.generate_diagram import generate_diagram
 from pydantic import BaseModel
 
-from generate_diagram import generate_diagram
-
 origins = ["*"]
+
 
 app = FastAPI()
 app.add_middleware(
@@ -18,6 +20,7 @@ app.add_middleware(
 )
 site_packages = site.getsitepackages()[0]
 app.mount(site_packages, StaticFiles(directory=site_packages), name="static")
+app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 
 class Code(BaseModel):
@@ -29,12 +32,31 @@ async def main():
     return FileResponse("index.html")
 
 
-@app.post("/endpoint")
-async def main(code: Code):
-    try:
-        f = generate_diagram(code.code)
-        return HTMLResponse(f)
-    except Exception:
-        return HTMLResponse(
-            "<p style='text-align: center; padding: 10px'>Oops. Something went wrong. Check your code and try again.</p>"
-        )
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        try:
+            f = generate_diagram(json.loads(data))
+            await websocket.send_text(f)
+        except Exception:
+            await websocket.send_text("")
+
+
+@app.websocket("/completions")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        json_data = json.loads(data)
+        params = json_data["params"]
+        text = params.get("textDocument").get("text")
+        if text:
+            line, character = params["position"].values()
+        try:
+            completions = generate_completions.get_completions(text, line, character)
+            await websocket.send_text(json.dumps(completions))
+        except Exception as e:
+            print(e)
+            await websocket.send_text("")
