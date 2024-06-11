@@ -1,7 +1,7 @@
 import ast
 import os
 
-from utils.ast_utils import modify_diagram_args
+from app.utils.ast_utils import modify_diagram_args
 
 
 def generate_diagram(definition: str = None):

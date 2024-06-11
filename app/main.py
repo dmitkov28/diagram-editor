@@ -5,9 +5,9 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from utils import generate_completions
-from utils.generate_diagram import generate_diagram
-from pydantic import BaseModel
+from app.utils import generate_completions
+from app.utils.generate_diagram import generate_diagram
+
 
 origins = ["*"]
 
@@ -21,10 +21,6 @@ app.add_middleware(
 site_packages = site.getsitepackages()[0]
 app.mount(site_packages, StaticFiles(directory=site_packages), name="static")
 app.mount("/static", StaticFiles(directory="./static"), name="static")
-
-
-class Code(BaseModel):
-    code: str
 
 
 @app.get("/")
