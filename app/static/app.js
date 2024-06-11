@@ -1,5 +1,5 @@
 import { values } from "./editorConfig.js";
-console.log(values);
+  
 require.config({
   paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
 });
