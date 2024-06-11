@@ -11,4 +11,7 @@ This a very rough sketch of a live diagram editor build with [Python Diagrams](h
 - [x] Add a language server to provide intellisense for the web editor
 - [x] Dockerize app
 - [x] Add more robust css for the layout
+- [] Sandbox code execution on the server
+- [] Fix diagram size
+- [] Add download functionality
  
