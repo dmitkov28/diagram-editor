@@ -20,10 +20,13 @@ html {
     height: 100%;
 }
 
+#diagram {
+    overflow-y: auto;
+}
 
 svg {
     height: 100%;
-    width: 100%;
+    width: 100%
 }
 
 #download-btn {
