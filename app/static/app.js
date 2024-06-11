@@ -1,3 +1,5 @@
+import { values } from "./editorConfig.js";
+console.log(values);
 require.config({
   paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
 });
@@ -22,13 +24,17 @@ wsDiagrams.addEventListener("message", (e) => {
 
 require(["vs/editor/editor.main"], function () {
   var editor = monaco.editor.create(document.getElementById("editor"), {
-    value: "# Link to the diagrams docs: https://diagrams.mingrammer.com/",
+    value: values,
     language: "python",
     acceptSuggestionOnCommitCharacter: true,
     acceptSuggestionOnEnter: "smart",
     theme: "vs-dark",
     minimap: { enabled: false },
   });
+
+  if (values){
+    wsDiagrams.send(JSON.stringify(values))
+  }
 
 
   let timeoutId;
