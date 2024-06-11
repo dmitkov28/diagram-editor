@@ -19,7 +19,7 @@ app.add_middleware(
     allow_methods=["*"],
 )
 site_packages = site.getsitepackages()[0]
-app.mount(site_packages, StaticFiles(directory=site_packages), name="static")
+app.mount("/logos", StaticFiles(directory=site_packages), name="staticz")
 app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 
