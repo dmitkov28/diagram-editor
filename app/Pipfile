@@ -8,6 +8,7 @@ fastapi = "*"
 diagrams = "*"
 jedi-language-server = "*"
 astor = "*"
+jinja2 = "*"
 
 [dev-packages]
 
