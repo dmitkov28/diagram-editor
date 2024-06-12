@@ -1,9 +1,11 @@
 import json
+import os
 import site
 
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from app.utils import generate_completions
 from app.utils.generate_diagram import generate_diagram
@@ -19,13 +21,18 @@ app.add_middleware(
     allow_methods=["*"],
 )
 site_packages = site.getsitepackages()[0]
+templates = Jinja2Templates(directory="templates")
 app.mount("/logos", StaticFiles(directory=site_packages), name="staticz")
 app.mount("/static", StaticFiles(directory="./static"), name="static")
 
+api_url = os.getenv("API_URL", "ws://localhost:8000")
+
 
 @app.get("/")
-async def main():
-    return FileResponse("index.html")
+async def main(request: Request):
+    return templates.TemplateResponse(
+        request=request, name="index.html", context={"api_url": api_url}
+    )
 
 
 @app.websocket("/ws")

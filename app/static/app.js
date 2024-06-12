@@ -1,11 +1,14 @@
 import { values } from "./editorConfig.js";
-  
+
 require.config({
   paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
 });
 
-const wsDiagrams = new WebSocket("ws://localhost:8000/ws")
-const wsCompletions = new WebSocket("ws://localhost:8000/completions");
+
+const apiUrl = document.querySelector('[data-api-url]').dataset.apiUrl
+
+const wsDiagrams = new WebSocket(`${apiUrl}/ws`)
+const wsCompletions = new WebSocket(`${apiUrl}/completions`);
 
 wsCompletions.addEventListener("open", (_) => {
   console.log("WebSocket connected.");
