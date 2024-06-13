@@ -18,21 +18,17 @@ wsDiagrams.addEventListener("open", (_) => {
   console.log("WebSocket connected.");
 });
 
-const diagramContainer = document.getElementById("diagram");
 const svg = document.getElementById("svg");
+const popup = document.querySelector("popup-component")
 
 wsDiagrams.addEventListener("message", (e) => {
   const diagram = e.data;
   if (diagram) {
     svg.innerHTML = diagram
-    
-    const popup = document.createElement("popup-component")
-    popup.style.position = "absolute";
-    popup.style.top = "2rem";
-    popup.style.right = "1rem"
-    diagramContainer.appendChild(popup)
+    popup.style.display = "block"
   } else {
-    diagramContainer.replaceChildren();
+    svg.innerHTML = ""
+    popup.style.display = "none"
   }
 })
 
