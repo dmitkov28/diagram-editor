@@ -11,7 +11,7 @@ def get_completions(src: str, line: int, character: int):
         "id": 1,
         "result": {
             "completions": [
-                {"label": completion.name, "insertText": completion.name}
+                {"label": completion.name, "insertText": completion.name, "kind": completion.type}
                 for completion in completions
                 if completion.name not in exclusions
             ]

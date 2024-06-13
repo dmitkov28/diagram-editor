@@ -14,3 +14,4 @@ export const values = [
         "   EC2('worker4'),",
         "   EC2('worker5')] >> RDS('events')"
 ].join("\n")
+

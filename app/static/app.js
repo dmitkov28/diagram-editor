@@ -51,7 +51,6 @@ require(["vs/editor/editor.main"], function () {
     wsDiagrams.send(JSON.stringify(values))
   }
 
-
   let timeoutId;
   editor.onDidChangeModelContent(async (e) => {
     const code = editor.getValue();
@@ -61,11 +60,19 @@ require(["vs/editor/editor.main"], function () {
     }, 500)
   })
 
+  const completionTypes = {
+    "function": monaco.languages.CompletionItemKind.Function,
+    "module": monaco.languages.CompletionItemKind.Module,
+    "class": monaco.languages.CompletionItemKind.Class,
+    "method": monaco.languages.CompletionItemKind.Method,
+    "property": monaco.languages.CompletionItemKind.Property,
+    "variable": monaco.languages.CompletionItemKind.Variable,
+  }
+
   function createDependencyProposalsFromServer(range, completions) {
     return completions.map((item) => ({
-      //TODO: fix kind & documentation to correctly match completions
       label: item.label,
-      kind: monaco.languages.CompletionItemKind.Function,
+      kind: completionTypes[item.kind],
       documentation: item.documentation,
       insertText: item.insertText,
       range: range,
@@ -130,5 +137,6 @@ require(["vs/editor/editor.main"], function () {
     },
   });
 });
+
 
 
