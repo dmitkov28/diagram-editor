@@ -1,4 +1,5 @@
 import { values } from "./editorConfig.js";
+import { Popup } from "./popup.js";
 
 require.config({
   paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
@@ -6,7 +7,6 @@ require.config({
 
 
 const apiUrl = document.querySelector('[data-api-url]').dataset.apiUrl
-
 const wsDiagrams = new WebSocket(`${apiUrl}/ws`)
 const wsCompletions = new WebSocket(`${apiUrl}/completions`);
 
@@ -18,10 +18,22 @@ wsDiagrams.addEventListener("open", (_) => {
   console.log("WebSocket connected.");
 });
 
+const diagramContainer = document.getElementById("diagram");
+const svg = document.getElementById("svg");
 
 wsDiagrams.addEventListener("message", (e) => {
   const diagram = e.data;
-  document.getElementById("diagram").innerHTML = diagram
+  if (diagram) {
+    svg.innerHTML = diagram
+    
+    const popup = document.createElement("popup-component")
+    popup.style.position = "absolute";
+    popup.style.top = "2rem";
+    popup.style.right = "1rem"
+    diagramContainer.appendChild(popup)
+  } else {
+    diagramContainer.replaceChildren();
+  }
 })
 
 
@@ -35,7 +47,7 @@ require(["vs/editor/editor.main"], function () {
     minimap: { enabled: false },
   });
 
-  if (values){
+  if (values) {
     wsDiagrams.send(JSON.stringify(values))
   }
 

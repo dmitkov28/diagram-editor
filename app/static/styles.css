@@ -34,3 +34,9 @@ svg {
     margin-left: auto;
     cursor: pointer;
 }
+
+popup-component {
+    position: absolute;
+    right: 1rem;
+    top: 2rem;
+}

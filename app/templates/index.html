@@ -15,7 +15,56 @@
     <div class="container">
         <div id="editor"></div>
         <div id="diagram">
+            <div id="svg"></div>
         </div>
+        <template id="popup">
+            <style>
+                button {
+                    border: 1px solid gray;
+                    border-radius: 0.2rem;
+                    background-color: transparent;
+                    cursor: pointer;
+                    padding: 5px 10px;
+                    font-size: medium;
+                }
+
+                span {
+                    display: none;
+                }
+
+                ul {
+                    position: absolute;
+                    border-radius: 0.2rem;
+                    right: 0;
+                    top: 20px;
+                    list-style: none;
+                    font-family: sans-serif;
+                    border: 1px solid lightgray;
+                    min-width: 200px;
+                    list-style-type: none;
+                    padding: 0;
+                    background: white;
+                }
+
+                ul li {
+                    cursor: pointer;
+                    padding: 10px 0 10px 5px;
+                }
+
+                ul li:hover {
+                    background-color: lightgray;
+                }
+            </style>
+            <div class="popup-container">
+                <button>Download</button>
+                <span>
+                    <ul>
+                        <li>svg</li>
+                        <li>png</li>
+                    </ul>
+                </span>
+            </div>
+        </template>
         <!-- <svg id="download-btn" style="margin-left: auto;" fill="#a9a9a9" height="20px" width="20px" version="1.1"
             id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 29.978 29.978" xml:space="preserve" stroke="#a9a9a9">
