@@ -2,14 +2,14 @@ import json
 import os
 import site
 
-from fastapi import FastAPI, WebSocket, Request
+from fastapi import FastAPI, Request, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
 from app.utils import generate_completions
 from app.utils.generate_diagram import generate_diagram
-
+from app.utils.sandbox import UnsafeCodeException
 
 origins = ["*"]
 
@@ -43,8 +43,11 @@ async def websocket_endpoint(websocket: WebSocket):
         try:
             f = generate_diagram(json.loads(data))
             await websocket.send_text(f)
-        except Exception:
-            await websocket.send_text("")
+        except UnsafeCodeException as e:
+            await websocket.send_text(str(e))
+        except Exception as e:
+            print(e)
+            pass
 
 
 @app.websocket("/completions")
