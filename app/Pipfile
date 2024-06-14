@@ -9,6 +9,7 @@ diagrams = "*"
 jedi-language-server = "*"
 astor = "*"
 jinja2 = "*"
+restrictedpython = "*"
 
 [dev-packages]
 

@@ -1,3 +1,5 @@
+import { setUpDownload } from "./download.js";
+
 const template = document.getElementById("popup")
 
 export class Popup extends HTMLElement {
@@ -9,9 +11,7 @@ export class Popup extends HTMLElement {
     }
 
     connectedCallback() {
-            
         this.#root.appendChild(template.content.cloneNode(true));
-
         const button = this.#root.querySelector("button");
         const span = this.#root.querySelector("span");
         const display = getComputedStyle(span).display;
@@ -32,6 +32,10 @@ export class Popup extends HTMLElement {
 
         this.#root.querySelectorAll("li").forEach(li => {
             li.addEventListener("click", (e) => {
+                if (li.textContent === "svg") {
+                    setUpDownload();
+
+                }
                 span.style.display = "none";
             })
         })
