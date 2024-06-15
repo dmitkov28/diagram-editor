@@ -31,7 +31,7 @@ Pygrams is a live cloud diagram editor build with [Python Diagrams](https://gith
 - [x] Add a language server to provide intellisense for the web editor
 - [x] Dockerize app
 - [x] Add more robust css for the layout
-- [ ] Sandbox code execution on the server
-- [ ] Fix diagram size
-- [ ] Add download functionality
+- [x] Sandbox code execution on the server
+- [] Fix diagram size
+- [x] Add download functionality
  
