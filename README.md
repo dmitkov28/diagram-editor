@@ -1,6 +1,6 @@
 ## Cloud Diagrams As Code
 
-Pygrams is a live cloud diagram editor build with [Python Diagrams](https://github.com/mingrammer/diagrams) and [Monaco-Editor](https://github.com/microsoft/monaco-editor).
+Pygrams is a live cloud diagram editor built with [Python Diagrams](https://github.com/mingrammer/diagrams) and [Monaco-Editor](https://github.com/microsoft/monaco-editor).
 
 <img src="./.github/assets/demo.gif"/>
 
