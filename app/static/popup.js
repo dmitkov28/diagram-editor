@@ -1,4 +1,4 @@
-import { setUpDownload } from "./download.js";
+import { exportDiagram } from "./exportDiagram.js";
 
 const template = document.getElementById("popup")
 
@@ -30,18 +30,11 @@ export class Popup extends HTMLElement {
             }
         })
 
-        this.#root.querySelectorAll("li").forEach(li => {
-            li.addEventListener("click", (e) => {
-                if (li.textContent === "svg") {
-                    setUpDownload();
-
-                }
-                span.style.display = "none";
-            })
+        this.#root.querySelector("ul").addEventListener("click", (e) => {
+            const outputType = e.target.textContent;
+            exportDiagram(outputType);
+            span.style.display = "none"
         })
-
-
-
     }
 }
 
