@@ -1,6 +1,6 @@
 ## Cloud Diagrams As Code
 
-Pygrams is a live cloud diagram editor built with [Python Diagrams](https://github.com/mingrammer/diagrams) and [Monaco-Editor](https://github.com/microsoft/monaco-editor).
+Pygrams is a live diagram editor built with [Python Diagrams](https://github.com/mingrammer/diagrams) and [Monaco-Editor](https://github.com/microsoft/monaco-editor).
 
 <img src="./.github/assets/demo.gif"/>
 
@@ -23,8 +23,7 @@ Pygrams is a live cloud diagram editor built with [Python Diagrams](https://gith
 3. Run the container
 
     ```
-    # When running the app in production, make sure to adjust API_URL accordingly (i.e. wss://api-prod.com)
-    docker run -d --restart always -e API_URL=<ws://localhost:8000> -p 8000:8000 pygrams
+    docker run -d -p 8000:8000 pygrams
     ```
 
 ### TODO
