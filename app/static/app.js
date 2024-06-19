@@ -1,5 +1,6 @@
 import { values } from "./editorConfig.js";
 import { Popup } from "./popup.js";
+import { ModalWarning } from "./modal.js";
 
 require.config({
   paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
