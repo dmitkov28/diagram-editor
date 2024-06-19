@@ -6,7 +6,7 @@ require.config({
 });
 
 
-const protocol = window.location.protocol === "https" ? "wss" : "ws"
+const protocol = window.location.protocol === "https:" ? "wss" : "ws"
 const host = window.location.host
 const wsDiagrams = new WebSocket(`${protocol}://${host}/ws`)
 const wsCompletions = new WebSocket(`${protocol}://${host}/completions`);
