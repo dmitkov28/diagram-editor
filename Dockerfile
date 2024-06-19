@@ -4,7 +4,6 @@ RUN apt-get update && apt-get install -y graphviz
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV API_URL=
 
 WORKDIR /app
 EXPOSE 8000

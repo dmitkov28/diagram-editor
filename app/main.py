@@ -25,14 +25,9 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/logos", StaticFiles(directory=site_packages), name="staticz")
 app.mount("/static", StaticFiles(directory="./static"), name="static")
 
-api_url = os.getenv("API_URL", "ws://localhost:8000")
-
-
 @app.get("/")
 async def main(request: Request):
-    return templates.TemplateResponse(
-        request=request, name="index.html", context={"api_url": api_url}
-    )
+    return templates.TemplateResponse(request=request, name="index.html")
 
 
 @app.websocket("/ws")

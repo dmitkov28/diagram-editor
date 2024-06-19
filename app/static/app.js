@@ -6,9 +6,10 @@ require.config({
 });
 
 
-const apiUrl = document.querySelector('[data-api-url]').dataset.apiUrl
-const wsDiagrams = new WebSocket(`${apiUrl}/ws`)
-const wsCompletions = new WebSocket(`${apiUrl}/completions`);
+const protocol = window.location.protocol === "https" ? "wss" : "ws"
+const host = window.location.host
+const wsDiagrams = new WebSocket(`${protocol}://${host}/ws`)
+const wsCompletions = new WebSocket(`${protocol}://${host}/completions`);
 
 wsCompletions.addEventListener("open", (_) => {
   console.log("WebSocket connected.");
