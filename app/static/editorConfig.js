@@ -8,10 +8,10 @@ export const values = [
     "# Find more at: https://diagrams.mingrammer.com/",
     "",
     "with Diagram('Grouped Workers', direction='TB'):",
-        "   ELB('lb') >> [EC2('worker1'),",
-        "   EC2('worker2'),",
-        "   EC2('worker3'),",
-        "   EC2('worker4'),",
-        "   EC2('worker5')] >> RDS('events')"
+    "   ELB('lb') >> [EC2('worker1'),",
+    "   EC2('worker2'),",
+    "   EC2('worker3'),",
+    "   EC2('worker4'),",
+    "   EC2('worker5')] >> RDS('events')"
 ].join("\n")
 
