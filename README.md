@@ -2,6 +2,9 @@
 
 Pygrams is a live diagram editor built with [Python Diagrams](https://github.com/mingrammer/diagrams) and [Monaco-Editor](https://github.com/microsoft/monaco-editor).
 
+
+https://github.com/dmitkov28/pygrams/assets/39580295/ac82ab68-5f5a-4232-aca0-b954cc738212
+
 <hr/>
 
 ## Getting started
