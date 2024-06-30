@@ -1,9 +1,10 @@
 import builtins
-
-from RestrictedPython import compile_restricted
-from RestrictedPython.Guards import safe_builtins
+import site
 
 import diagrams
+from diagrams import Diagram
+from RestrictedPython import compile_restricted
+from RestrictedPython.Guards import safe_builtins
 
 
 def restricted_import(name, globals=None, locals=None, fromlist=(), level=0):
@@ -20,8 +21,25 @@ safe_globals = {"__builtins__": safe_builtins, "diagrams": diagrams}
 
 
 def run_sandboxed_code(code: str):
+
+    class CustomDiagram(Diagram):
+        """Overrides the default behavior of the Diagram class context manager"""
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            pass
+
     byte_code = compile_restricted(code, filename="<inline code>", mode="exec")
-    exec(byte_code, safe_globals)
+    namespace = {"CustomDiagram": CustomDiagram}
+    exec(byte_code, safe_globals, namespace)
+    diagram = namespace.get("diagram")
+
+    if diagram:
+        svg = diagram.dot._repr_image_svg_xml().replace(
+            site.getsitepackages()[0], "/logos"
+        )
+        return svg
+    return ""
+
 
 class UnsafeCodeException(Exception):
     pass
