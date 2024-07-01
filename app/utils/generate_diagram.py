@@ -6,7 +6,8 @@ from app.utils.sandbox import run_sandboxed_code
 
 
 def generate_diagram(definition: str = None):
-    modified_code = definition.replace("):", ") as diagram:\n")
+    modified_code = definition.replace("):", ") as diagram:\n", 1)
+    print(modified_code)
     tree = ast.parse(modified_code)
     modified_diagram = modify_diagram(tree)
     diagram_svg = run_sandboxed_code(modified_diagram)
